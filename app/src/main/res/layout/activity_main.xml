@@ -16,7 +16,7 @@
         android:nestedScrollingEnabled="false"
         android:longClickable="true"
         android:layout_alignWithParentIfMissing="false"
-        android:layout_marginBottom="37dp"
+        android:layout_marginBottom="70dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true">
 
@@ -26,7 +26,10 @@
             android:id="@+id/button"
             android:background="@drawable/button"
             android:layout_row="1"
-            android:layout_column="0" />
+            android:layout_column="0"
+            android:onClick="buttonPressed"
+            android:tag="0"
+            android:enabled="false" />
 
         <Button
             android:layout_width="60dp"
@@ -34,7 +37,10 @@
             android:id="@+id/button2"
             android:background="@drawable/button"
             android:layout_row="1"
-            android:layout_column="1" />
+            android:layout_column="1"
+            android:onClick="buttonPressed"
+            android:tag="1"
+            android:enabled="false"/>
 
         <Button
             android:layout_width="60dp"
@@ -42,7 +48,10 @@
             android:id="@+id/button3"
             android:background="@drawable/button"
             android:layout_row="1"
-            android:layout_column="2" />
+            android:layout_column="2"
+            android:onClick="buttonPressed"
+            android:tag="2"
+            android:enabled="false"/>
 
         <Button
             android:layout_width="60dp"
@@ -50,7 +59,10 @@
             android:id="@+id/button4"
             android:background="@drawable/button"
             android:layout_row="1"
-            android:layout_column="3" />
+            android:layout_column="3"
+            android:onClick="buttonPressed"
+            android:tag="3"
+            android:enabled="false"/>
 
         <Button
             android:layout_width="60dp"
@@ -58,7 +70,10 @@
             android:id="@+id/button5"
             android:background="@drawable/button"
             android:layout_row="2"
-            android:layout_column="0" />
+            android:layout_column="0"
+            android:onClick="buttonPressed"
+            android:tag="4"
+            android:enabled="false"/>
 
         <Button
             android:layout_width="60dp"
@@ -66,7 +81,10 @@
             android:id="@+id/button6"
             android:background="@drawable/button"
             android:layout_row="2"
-            android:layout_column="1" />
+            android:layout_column="1"
+            android:onClick="buttonPressed"
+            android:tag="5"
+            android:enabled="false"/>
 
         <Button
             android:layout_width="60dp"
@@ -74,7 +92,10 @@
             android:id="@+id/button7"
             android:background="@drawable/button"
             android:layout_row="2"
-            android:layout_column="2" />
+            android:layout_column="2"
+            android:onClick="buttonPressed"
+            android:tag="6"
+            android:enabled="false"/>
 
         <Button
             android:layout_width="60dp"
@@ -82,7 +103,10 @@
             android:id="@+id/button8"
             android:background="@drawable/button"
             android:layout_row="2"
-            android:layout_column="3" />
+            android:layout_column="3"
+            android:onClick="buttonPressed"
+            android:tag="7"
+            android:enabled="false"/>
 
         <Button
             android:layout_width="60dp"
@@ -90,7 +114,10 @@
             android:id="@+id/button9"
             android:background="@drawable/button"
             android:layout_row="3"
-            android:layout_column="0" />
+            android:layout_column="0"
+            android:onClick="buttonPressed"
+            android:tag="8"
+            android:enabled="false"/>
 
         <Button
             android:layout_width="60dp"
@@ -98,7 +125,10 @@
             android:id="@+id/button10"
             android:background="@drawable/button"
             android:layout_row="3"
-            android:layout_column="1" />
+            android:layout_column="1"
+            android:onClick="buttonPressed"
+            android:tag="9"
+            android:enabled="false"/>
 
         <Button
             android:layout_width="60dp"
@@ -106,7 +136,10 @@
             android:id="@+id/button11"
             android:background="@drawable/button"
             android:layout_row="3"
-            android:layout_column="2" />
+            android:layout_column="2"
+            android:onClick="buttonPressed"
+            android:tag="10"
+            android:enabled="false"/>
 
         <Button
             android:layout_width="60dp"
@@ -114,7 +147,10 @@
             android:id="@+id/button12"
             android:background="@drawable/button"
             android:layout_row="3"
-            android:layout_column="3" />
+            android:layout_column="3"
+            android:onClick="buttonPressed"
+            android:tag="11"
+            android:enabled="false"/>
 
         <Button
             android:layout_width="60dp"
@@ -122,7 +158,10 @@
             android:id="@+id/button13"
             android:background="@drawable/button"
             android:layout_row="4"
-            android:layout_column="0" />
+            android:layout_column="0"
+            android:onClick="buttonPressed"
+            android:tag="12"
+            android:enabled="false"/>
 
         <Button
             android:layout_width="60dp"
@@ -130,7 +169,10 @@
             android:id="@+id/button14"
             android:background="@drawable/button"
             android:layout_row="4"
-            android:layout_column="1" />
+            android:layout_column="1"
+            android:onClick="buttonPressed"
+            android:tag="13"
+            android:enabled="false"/>
 
         <Button
             android:layout_width="60dp"
@@ -138,7 +180,10 @@
             android:id="@+id/button15"
             android:background="@drawable/button"
             android:layout_row="4"
-            android:layout_column="2" />
+            android:layout_column="2"
+            android:onClick="buttonPressed"
+            android:tag="14"
+            android:enabled="false"/>
 
         <Button
             android:layout_width="60dp"
@@ -146,18 +191,23 @@
             android:id="@+id/button16"
             android:background="@drawable/button"
             android:layout_row="4"
-            android:layout_column="3" />
+            android:layout_column="3"
+            android:onClick="buttonPressed"
+            android:tag="15"
+            android:enabled="false"/>
 
     </GridLayout>
 
     <Button
+        android:text="Start"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:id="@+id/color"
-        android:background="@drawable/colorbutton"
+        android:id="@+id/colorButton"
+        android:background="@drawable/button"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:clickable="false" />
+        android:onClick="start"
+        android:enabled="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -166,7 +216,7 @@
         android:text="Tapps: "
         android:id="@+id/textTapps"
         android:layout_marginTop="39dp"
-        android:layout_below="@+id/color"
+        android:layout_below="@+id/colorButton"
         android:layout_alignParentStart="true" />
 
     <TextView
@@ -175,7 +225,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/tapps"
         android:layout_alignTop="@+id/textTapps"
-        android:layout_toEndOf="@+id/textTapps" />
+        android:layout_toEndOf="@+id/textTapps"
+        android:text="0" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -183,6 +234,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/time"
         android:layout_alignTop="@+id/tapps"
-        android:layout_toEndOf="@+id/color" />
+        android:layout_toEndOf="@+id/colorButton" />
 
 </RelativeLayout>
