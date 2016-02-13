@@ -1,7 +1,7 @@
 package com.tapps.henrikanderson.tapps;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,10 +12,13 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -44,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
                 start(view);
             }
         });
+
+        //Lock the screen orientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     @Override
@@ -73,15 +80,10 @@ public class MainActivity extends AppCompatActivity {
      */
     public void start(View view){
         initButtonGried();
-        System.out.println("init btn good");
         startTime();
-        System.out.println("timer good");
         enableAllButtons();
-        System.out.println("enable good");
         changeAllButtonColor();
-        System.out.println("color good");
         setColorButton();
-        System.out.println("colorbtn good");
         buttonGrid.clear();
         noTextColorButton();
         tapps = 0;
@@ -101,30 +103,26 @@ public class MainActivity extends AppCompatActivity {
         String tag = view.getTag().toString();
         int index = Integer.parseInt(tag);
 
-        Button button = buttonGrid.get(index);
+        //Button button = buttonGrid.get(index);
         //changeColor(button, randomColorString());
 
         changeAllButtonColor();
         setColorButton();
 
-        tappsCheck(buttonClassList.get(index));
+        tappsCheck(index);
     }
 
 
-    private int colorButtonCorrectIndex;
     /**
      * Set the color of the colorButton (the button that show the color to press)
      */
     public void setColorButton(){
         Button colorButton = (Button) findViewById(R.id.colorButton);
 
-        colorButtonCorrectIndex = getRandomNum(16);
+        changeColor(colorButton, theColor);
+        ButtonClass colorButtonClass = new ButtonClass(17, colorButton);
+        colorButtonClass.setColor(theColor);
 
-        String color = colorUsedList.get(colorButtonCorrectIndex);
-        changeColor(colorButton, color);
-
-        System.out.println(colorUsedList);
-        //colorList.removeAll(colorList);
         buttonGrid.removeAll(buttonGrid);
         colorUsedList.clear();
 
@@ -140,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
     public void changeColor(Button button, String color){
         try {
             GradientDrawable gd = (GradientDrawable) button.getBackground().getCurrent();
-            //gd.setColor(Color.parseColor("#00FF00"));
-
             gd.setColor(Color.parseColor(color));
 
             //gd.setCornerRadii(new float[]{30, 30, 30, 30, 0, 0, 30, 30});
@@ -153,23 +149,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private List<Integer> numberUsed = new ArrayList<>();
-    public void changeAllButtonColor(){
-        int size = 16;
-        for (Button button : buttonGrid){
+    private String theColor;
 
-            int x = getRandomNum(size);
-            if(numberUsed.contains(x)){
-                x = getRandomNum(size);
+    public void changeAllButtonColor(){
+        Collections.shuffle(colorList);
+        int colorButtonCorrectIndex = getRandomNum(16);
+        int size = 0;
+        for (Button button : buttonGrid){
+            changeColor(button, colorList.get(size));
+            if(size == colorButtonCorrectIndex){
+                theColor = colorList.get(size);
+                buttonClassList.get(size).setCorrect(true);
             }
-            // TODO: 09.02.2016 Fiks tilfeldig tall og farge 
-            changeColor(button, colorList.get(x));
-            colorUsedList.add(colorList.get(x));
-            numberUsed.add(x);
-            size--;
-            //System.out.println(numberUsed);
-            System.out.println(x);
+            buttonClassList.get(size).setColor(colorList.get(size));
+            size++;
         }
+    }
+
+    public String getNewColor(int random, int size){
+        String color = colorList.get(random);
+        while (!colorUsedList.contains(color)){
+            color = colorList.get(getRandomNum(size));
+            colorUsedList.add(color);
+        }
+        return color;
     }
 
     public int getRandomNum(int size){
@@ -203,13 +206,10 @@ public class MainActivity extends AppCompatActivity {
      * @return hex color string
      */
     private List<String> colorList = Arrays.asList("#00FFFF", "#000000", "#0000FF", "#FF00FF", "#808080", "#008000", "#00FF00", "#800000", "#000080", "#808000", "#800080", "#FF0000", "#C0C0C0", "#008080", "#FFFFFF", "#FFFF00");
-    /*
+
     public String randomColorString(){
         List<String> charList = Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F");
-
-
         String colorString ="#";
-
         for (int i = 0; i < 6; i++){
             Random ran = new Random();
             int x = ran.nextInt(16);
@@ -222,7 +222,6 @@ public class MainActivity extends AppCompatActivity {
         //colorList.add(colorString);
         return colorString;
     }
-*/
 
 
     /**
@@ -230,32 +229,30 @@ public class MainActivity extends AppCompatActivity {
      */
     private int tapps;
 
-    public void tappsCheck(ButtonClass pressed){
+    public void tappsCheck(int pressed){
         TextView text = (TextView) findViewById(R.id.tapps);
-        System.out.println(colorButtonCorrectIndex);
-        System.out.println(pressed.getIndex());
-
-        if(colorButtonCorrectIndex == pressed.getIndex()){
+        if(buttonClassList.get(pressed).isCorrect()){
             tapps++;
+            buttonClassList.get(pressed).setCorrect(false);
         }else{
-            if(tapps-1 > 0){
+            if(tapps-1 >= 0){
                 tapps--;
-            };
+            }
         }
         String str = "" + tapps;
         text.setText(str);
     }
 
-    public int getTapps() {
-        return tapps;
+    public String getTapps() {
+        String str = "";
+        return str + tapps;
     }
     /**
      * The timer
      */
     private long startTime;
-    private long nowTime;
     private Timer timer;
-    private int gameTime = 20;
+    private int gameTime = 10;
 
     public void startTime(){
         Date date = new Date();
@@ -273,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
         TextView time = (TextView) findViewById(R.id.time);
         @Override
         public void run() {
-            nowTime = new Date().getTime();
+            long nowTime = new Date().getTime();
             float x = (float) (nowTime - startTime)/1000;
             float y = gameTime - x;
             setTextTime(time,String.format("%.1f", y));
@@ -281,6 +278,20 @@ public class MainActivity extends AppCompatActivity {
                 stopTime();
                 setTextTime(time, "0");
                 disableAllButtons();
+
+               // r
+
+                runOnUiThread(new Runnable() {
+                    RelativeLayout relout = (RelativeLayout) findViewById(R.id.relout);
+                    @Override
+                    public void run() {
+                       relout.setVisibility(View.VISIBLE);
+                    }
+                });
+
+                TextView gameOver = (TextView) findViewById(R.id.textGameOverTapps);
+
+                gameOver.setText(getTapps());
                 //gameOverMenu?
             }
         }

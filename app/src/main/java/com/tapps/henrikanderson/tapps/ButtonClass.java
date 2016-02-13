@@ -10,6 +10,7 @@ public class ButtonClass {
     private int index;
     private String color;
     private Button button;
+    private boolean correct;
 
     public ButtonClass(int index, Button button) {
         this.index = index;
@@ -27,5 +28,13 @@ public class ButtonClass {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public boolean isCorrect() {
+        return correct;
+    }
+
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
     }
 }
